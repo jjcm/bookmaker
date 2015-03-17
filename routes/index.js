@@ -4,6 +4,7 @@ var multiparty = require('multiparty')
 var format = require('util').format
 var formidable = require('formidable')
 var fs = require('fs-extra')
+var Image = require('../models/image')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -15,18 +16,42 @@ router.post('/', function(req, res, next){
   var image
   var title
   var file
+  var type
 
 
   form.on('error', next)
   form.on('close', function(){
-    console.log("name = " + file.originalFilename)
-    console.log("file = " + file.size / 1024)
-    console.log(image)
-    fs.copy(file.path, "./public/images/" + "hi.jpg", function(){
-      console.log("copied!")
-      res.send(format('\nuploaded %s (%d Kb) as %s\n<img src="%s"/>', file.originalFilename, file.size / 1024 | 0, title, "images/hi.jpg"))
+    switch(file.headers['content-type']){
+      case "image/jpeg":
+        type = ".jpg"
+        break
+      case "image/gif":
+        type = ".gif"
+        break
+      case "image/png":
+        type = ".png"
+        break
+    }
+
+
+    image = new Image({
+      page: 1,
+      book: "magic"
     })
-    
+
+    image.path = "/images/" + image._id + type
+
+    console.log(image)
+
+    image.save(function(err, post){
+      if(err) {return next(err)}
+      console.log("saved!")
+      fs.copy(file.path, "./public" + image.path, function(){
+        console.log("copied!")
+        res.send(format('\nuploaded %s (%d Kb) as %s\n<img src="%s"/>', file.originalFilename, file.size / 1024 | 0, title, image.path))
+      })
+    })
+    console.log(image)
   })
 
   form.on('field', function(name, val){

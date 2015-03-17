@@ -14,8 +14,9 @@
     "morgan": "~1.5.1",
     "serve-favicon": "~2.2.0",
     "stylus": "0.42.3",
-    "multiparty" : "",
-    "fs-extra" : "",
-    "formidable": ""
+    "multiparty": "",
+    "fs-extra": "",
+    "formidable": "",
+    "mongoose": "~3.8.25"
   }
 }
