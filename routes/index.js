@@ -36,8 +36,10 @@ router.post('/', function(req, res, next){
 
     image = new Image({
       page: 1,
-      book: "magic"
+      book: book
     })
+
+    console.log(form)
 
     image.path = "/images/" + image._id + type
 
@@ -55,8 +57,11 @@ router.post('/', function(req, res, next){
   })
 
   form.on('field', function(name, val){
-    if(name !== 'title') return
-    title = val
+    console.log("NAME = " + name)
+    if(name == 'title')
+      title = val
+    if(name == 'book')
+      book = val
   })
 
   form.on('progress', function(received, expected){
