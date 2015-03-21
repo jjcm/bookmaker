@@ -5,16 +5,21 @@ var format = require('util').format
 var formidable = require('formidable')
 var fs = require('fs-extra')
 var Image = require('../models/image')
+var PageController = require('../controllers/page')
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  console.log(req.params.id)
-  console.log(req.params.foo)
+/*
+router.get('/:book', function(req, res, next) {
+  console.log('book path')
+  PageController.hello()
 
   res.render('index', { title: 'Express' });
 });
+*/
 
-router.post('/:id', function(req, res, next){
+router.get('/:book', PageController.hello)
+
+router.post('books/:book', function(req, res, next){
   var form = new multiparty.Form();
   var image
   var title
