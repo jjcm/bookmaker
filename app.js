@@ -9,7 +9,6 @@ var multiparty = require('multiparty')
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var books = require('./routes/books');
-var pages = require('./routes/pages');
 
 var app = express();
 
