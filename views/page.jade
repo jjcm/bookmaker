@@ -1,0 +1,14 @@
+extends layout
+
+block head
+
+block content
+  h1= title
+  ul#images(ng-controller='ImageController')
+    li(ng-repeat='image in images')
+      {{image.path}}
+  script(type="text/javascript")
+    | var page = "!{page}"
+  script(src="/javascripts/pages.js")
+
+

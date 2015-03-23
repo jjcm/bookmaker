@@ -18,7 +18,6 @@ router.get('/:book', function(req, res, next) {
 */
 
 router.get('/:book/page/:page', PageController.view)
-router.post('/:book/page/:page/createImage', PageController.createImage)
 
 router.post('books/:book', function(req, res, next){
   var form = new multiparty.Form();
