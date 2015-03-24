@@ -5,8 +5,8 @@ block head
 block content
   h1= title
   ul#images(ng-controller='ImageController')
-    li(ng-repeat='image in images')
-      {{image.path}}
+    li(ng-repeat='image in images', data-depth="{{image._id}}")
+      img(src='{{image.path}}')
   script(type="text/javascript")
     | var page = "!{page}"
   script(src="/javascripts/pages.js")

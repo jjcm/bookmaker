@@ -14,12 +14,14 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.post('/:id', function(req, res, next){
+router.post('/page', function(req, res, next){
   var form = new multiparty.Form();
   var image
   var title
   var file
   var type
+  console.log('AYY LMAO')
+  console.log(req.params.id)
 
 
   form.on('error', next)

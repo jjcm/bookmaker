@@ -13,6 +13,7 @@ var Page = {
   },
   createImage: function(req, res, next){
     console.log(req.params.page)
+    console.log('ayy lmao')
   }
 }
 
