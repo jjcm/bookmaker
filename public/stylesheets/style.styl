@@ -1,20 +1,95 @@
+html
+  height: 100%
 body
   padding: 50px
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
   background-color: #333
   color: #ddd
+  height: 100%
+  width: 100%
 a
   color: #99B7FF
 
 
 #layers
+  position: absolute
+  right: 0px
+  top: 0px
+  background-color: #191919
+  width: 500px
+  height: 100%
+  #layer123
+    top: 100px
+    left: 50px
+    z-index: 10
+  #layer124
+    top: 150px
+    left: 50px
+    z-index: 9
+  #layer127
+    top: 400px
+    left: 50px
+    z-index: 8
+  #layer128
+    top: 640px
+    left: 50px
+    z-index: 7
   .layer
+    position: absolute
+    width: 326px
+    height: 80px
+    transform: perspective(400px) rotateX(45deg)
+    box-shadow: 0 10px 18px rgba(#000000ff)
+    cursor: -webkit-grab
     .image-container
-      background-image: url(/public/images/transparentPattern.png)
+      position: absolute
+      left: 0px
+      top: 0px
+      background-image: url(/images/transparentPattern.png)
       width: 126px
       height: 80px
     .content
+      position: absolute
+      right: 0px
+      top: 0px
+      width: 200px
+      height: 80px
+      background-color: #1e1e1e
       .name
         color: #fff
+        position: absolute
+        text-align: right
+        width: 150px
+        right: 56px
+        bottom: 12px
+        font-size: 22px
       .delete
-        color: #fff
+        width: 24px
+        height: 24px
+        position: absolute
+        right: 16px
+        bottom: 16px
+        background-image: url(/images/deleteLayer.png)
+        background-position: center center
+        background-repeat: no-repeat
+        background-color: rgba(#FFFFFF55)
+        cursor: pointer
+        transition: background-color 0.2s ease-in-out
+      .delete:hover
+        background-color: rgba(#FFFFFF88)
+        transition: none
+      .delete:active
+        background-color: rgba(#FFFFFF33)
+        transition: none
+
+    .shadow
+      opacity: 0.8
+      width: 355px
+      height: 111px
+      position: absolute
+      top: 0px
+      left: -14px
+      background-image: url(/images/layerShadow.png)
+  .layer:active
+    cursor: -webkit-grabbing
+
