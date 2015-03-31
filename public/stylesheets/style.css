@@ -7,3 +7,14 @@ body {
 a {
   color: #99b7ff;
 }
+#layers .layer .image-container {
+  background-image: url("/public/images/transparentPattern.png");
+  width: 126px;
+  height: 80px;
+}
+#layers .layer .content .name {
+  color: #fff;
+}
+#layers .layer .content .delete {
+  color: #fff;
+}

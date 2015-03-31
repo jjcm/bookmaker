@@ -7,6 +7,24 @@ block content
   ul#images(ng-controller='ImageController')
     li(ng-repeat='image in images', data-depth="{{image._id}}")
       img(src='{{image.path}}')
+  
+  #layers
+    #layer123.layer
+      .image-container
+        .image
+      .content
+        .name
+          hills
+        .delete
+    #layer124.layer
+    #layer127.layer
+    #layer128.layer
+    #layer129.layer
+
+
+
+
+
   script(type="text/javascript")
     | var page = "!{page}"
   script(src="/javascripts/pages.js")
