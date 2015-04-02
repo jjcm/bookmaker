@@ -3,10 +3,18 @@ extends layout
 block head
 
 block content
-  h1= title
+  #header
+    #home
+    #title
+      h1= title
+    #page
+      #page-dropwdown
+    #add-page
+
   ul#images(ng-controller='ImageController')
     li(ng-repeat='image in images', data-depth="{{image._id}}")
       img(src='{{image.path}}')
+
   
   #layers
     #layer123.layer
