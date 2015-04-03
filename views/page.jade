@@ -16,37 +16,14 @@ block content
       img(src='{{image.path}}')
 
   
-  #layers
-    #layer123.layer
+  #layers(ng-controller='ImageController')
+    .layer(ng-repeat='image in images', id='{{image._id}}', style='top: {{image.depth}}%')
       .image-container
-        .image
+        .image(style="background-image: url({{image.path}})")
       .content
         .name
-          | hills
+          {{image.name || "untitled"}}
         .delete
-    #layer124.layer
-      .image-container
-        .image
-      .content
-        .name
-          | hills
-        .delete
-    #layer127.layer
-      .image-container
-        .image
-      .content
-        .name
-          | hills
-        .delete
-    #layer128.layer
-      .image-container
-        .image
-      .content
-        .name
-          | hills
-        .delete
-
-
 
 
 
