@@ -33,7 +33,7 @@ a {
   background-color: #36383b;
 }
 #header #title h1 {
-  padding-top: 24px;
+  padding-top: 26px;
   margin: 0;
   font-weight: 300;
   text-transform: capitalize;
@@ -84,25 +84,67 @@ a {
 }
 #right-panel {
   position: absolute;
-  background-color: #2e2f32;
+  background-color: #191919;
   right: 0px;
   top: 0px;
-  width: 500px;
+  width: 504px;
   box-sizing: border-box;
   padding-top: 96px;
+  padding-bottom: 120px;
   height: 100%;
   overflow: hidden;
+}
+#right-panel #weight-adjustment {
+  background-color: #2e2f32;
+  position: absolute;
+  height: 96px;
+  width: 504px;
+  top: 0px;
+  padding-top: 30px;
+}
+#right-panel #weight-adjustment #x-weight,
+#right-panel #weight-adjustment #y-weight {
+  margin-left: 40px;
+  width: 196px;
+  float: left;
+}
+#right-panel #weight-adjustment #x-weight .label,
+#right-panel #weight-adjustment #y-weight .label {
+  margin-left: 8px;
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 700;
+  color: #b9b9b9;
+}
+#right-panel #weight-adjustment #x-weight .bar-container,
+#right-panel #weight-adjustment #y-weight .bar-container {
+  padding: 8px;
+  cursor: pointer;
+}
+#right-panel #weight-adjustment #x-weight .bar,
+#right-panel #weight-adjustment #y-weight .bar {
+  background-color: #fff;
+  height: 6px;
+  border-radius: 3px;
+  width: 180px;
+}
+#right-panel #weight-adjustment #x-weight .bar .inner-bar,
+#right-panel #weight-adjustment #y-weight .bar .inner-bar {
+  background-color: #f44255;
+  width: 90px;
+  height: 6px;
+  border-radius: 3px;
 }
 #layers {
   position: relative;
   display: inline-block;
   background-color: #191919;
-  width: 500px;
+  width: 504px;
   height: 100%;
 }
 #layers .layer {
   position: absolute;
-  left: 40px;
+  left: 120px;
   width: 326px;
   height: 80px;
   transform: perspective(400px) rotateX(45deg);
@@ -166,4 +208,7 @@ a {
 }
 #layers .layer:active {
   cursor: -webkit-grabbing;
+}
+#images {
+  list-style: none;
 }

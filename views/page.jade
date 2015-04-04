@@ -22,9 +22,23 @@ block content
 
   
   #right-panel
+    #weight-adjustment
+      #x-weight
+        .label
+          | x-weight
+        .bar-container
+          .bar
+            .inner-bar
+      #y-weight
+        .label
+          | y-weight
+        .bar-container
+          .bar
+            .inner-bar
+
     #layers(ng-controller='ImageController')
       
-      .layer(ng-repeat='image in images', id='{{image._id}}', style='top: {{image.depth}}%')
+      .layer(ng-repeat='image in images', id='{{image._id}}', style='top: {{image.depth || 0}}%; z-index: {{100 - image.depth || 100}};', data-depth='{{image.depth || 0}}')
         .image-container
           .image(style="background-image: url({{image.path}})")
         .content

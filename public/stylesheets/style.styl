@@ -1,6 +1,8 @@
 //variables
 header-height = 96px
 open-sans = 'Open Sans', sans-serif
+red = #f44255
+red-highlight = #fa3045
 
 
 //styles
@@ -32,7 +34,7 @@ a
     padding: 0 24px
     background-color: #36383b
     h1
-      padding-top: 24px
+      padding-top: 26px
       margin: 0
       font-weight: 300
       text-transform: capitalize
@@ -43,7 +45,7 @@ a
       margin-top: 24px
       height: 48px
       border-radius: 4px
-      background-color: #f44255
+      background-color: red
       box-sizing: border-box
       font-size: 18px
       text-transform: uppercase
@@ -55,7 +57,7 @@ a
       cursor: pointer
       transition: background-color 0.2s ease-in-out
     #page:hover
-      background-color: #fa3045
+      background-color: red-highlight
       transition: none
     #page-dropwdown
       display: none
@@ -67,34 +69,66 @@ a
       cursor: pointer
       margin-top: 24px
       border-radius: 4px
-      background-color: #f44255
+      background-color: red
       background-image: url(/images/add.png)
       background-repeat: no-repeat
       background-position: center
     #add-page:hover
-      background-color: #fa3045
+      background-color: red-highlight
     
 
 #right-panel
   position: absolute
-  background-color: #2e2f32
+  background-color: #191919
   right: 0px
   top: 0px
-  width: 500px
+  width: 504px
   box-sizing: border-box
   padding-top: header-height
+  padding-bottom: 120px
   height: 100%
   overflow: hidden
+  #weight-adjustment
+    background-color: #2e2f32
+    position: absolute
+    height: header-height
+    width: 504px
+    top: 0px
+    padding-top: 30px
+    #x-weight, #y-weight
+      margin-left: 40px
+      width: 196px
+      float: left
+      .label
+        margin-left: 8px
+        text-transform: uppercase
+        font-size: 18px
+        font-weight: 700
+        color: #b9b9b9
+      .bar-container
+        padding: 8px 
+        cursor: pointer
+      .bar
+        background-color: #fff
+        height: 6px
+        border-radius: 3px
+        width: 180px
+        .inner-bar
+          background-color: red
+          width: 90px
+          height: 6px
+          border-radius: 3px
+
 
 #layers
   position: relative
   display: inline-block
   background-color: #191919
-  width: 500px
+  width: 504px
   height: 100%
   .layer
     position: absolute
-    left: 40px
+    left: 120px
     width: 326px
     height: 80px
     transform: perspective(400px) rotateX(45deg)
@@ -152,3 +186,5 @@ a
   .layer:active
     cursor: -webkit-grabbing
 
+#images
+  list-style: none

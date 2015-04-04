@@ -11,39 +11,49 @@ app.controller('ImageController', function($scope, $http){
     })
 })
 
+var bookmaker = {
+  init: function(){
+    layer.init()
+
+    document.addEventListener('mousemove', bookmaker.mouseMove)
+    document.addEventListener('mouseup', bookmaker.mouseUp)
+  },
+  mouseMove: function(e){
+    if(layer.isMouseDown)
+      layer.mouseMove(e)
+  },
+  mouseUp: function(e){
+    if(layer.isMouseDown)
+      layer.mouseUp(e)
+  }
+}
+
 var layer = {
   init: function(){
-    $('layers').addEventListener('click', layer.mousedown)
+    $('layers').addEventListener('mousedown', layer.mouseDown)
   },
-  layers: [
-    {
-      dom: $('layer123'),
-      y: 100
-    },
-    {
-      dom: $('layer124'),
-      y: 140
-    },
-    {
-      dom: $('layer123'),
-      y: 300
-    },
-    {
-      dom: $('layer123'),
-      y: 500
-    },
-  ],
-  mousedown: function(e){
+  activeLayer: null,
+  depth: null,
+  isMouseDown: false,
+  mouseDown: function(e){
+    layer.isMouseDown = true
     element = e.toElement
     if(element.className == 'delete'){
       console.log('delete this div')
     }
     else{
-      console.log(layer.getLayerFromChild(element))
+      layer.activeLayer = layer.getLayerFromChild(element)
+      layer.depth = Number.parseInt(layer.activeLayer.dataset.depth)
+
+      console.log(layer.activeLayer)
+      console.log(layer.depth)
     }
   },
+  mouseMove: function(e){
+    console.log("mousemove")
+  },
   getLayerFromChild: function(e){
-    if(e.className == "layer")
+    if(e.classList.contains("layer"))
       return e
     if(!e.parentElement)
       return null
@@ -52,4 +62,4 @@ var layer = {
 
 }
 
-layer.init()
+bookmaker.init()
