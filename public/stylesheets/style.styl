@@ -1,41 +1,100 @@
+//variables
+header-height = 96px
+open-sans = 'Open Sans', sans-serif
+
+
+//styles
 html
   height: 100%
 body
-  padding: 50px
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif
+  font-size: 14px
+  font-family: open-sans
   background-color: #333
   color: #ddd
-  height: 100%
-  width: 100%
+  margin: 0
 a
   color: #99B7FF
 
+#header
+  background-color: #252629
+  overflow: hidden
+  ul
+    list-style: none
+    margin: 0
+    padding: 0
+  li
+    float: left
+    height: header-height
+  #home
+    width: 234px
+    background-image: url(/images/nonio-logo.png)
+  #title
+    padding: 0 24px
+    background-color: #36383b
+    h1
+      padding-top: 24px
+      margin: 0
+      font-weight: 300
+      text-transform: capitalize
+  #page-container
+    margin-left: 48px
+    color: #fff
+    #page
+      margin-top: 24px
+      height: 48px
+      border-radius: 4px
+      background-color: #f44255
+      box-sizing: border-box
+      font-size: 18px
+      text-transform: uppercase
+      padding: 11px 12px
+      width: 180px
+      background-image: url(/images/down-chevron.png)
+      background-repeat: no-repeat
+      background-position: 154px center
+      cursor: pointer
+      transition: background-color 0.2s ease-in-out
+    #page:hover
+      background-color: #fa3045
+      transition: none
+    #page-dropwdown
+      display: none
+  #add-page-container
+    margin-left: 12px
+    #add-page
+      height: 48px
+      width: 48px
+      cursor: pointer
+      margin-top: 24px
+      border-radius: 4px
+      background-color: #f44255
+      background-image: url(/images/add.png)
+      background-repeat: no-repeat
+      background-position: center
+    #add-page:hover
+      background-color: #fa3045
+    
 
-#layers
+#right-panel
   position: absolute
+  background-color: #2e2f32
   right: 0px
   top: 0px
+  width: 500px
+  box-sizing: border-box
+  padding-top: header-height
+  height: 100%
+  overflow: hidden
+
+#layers
+  position: relative
+  display: inline-block
   background-color: #191919
   width: 500px
   height: 100%
-  #layer123
-    top: 100px
-    left: 50px
-    z-index: 10
-  #layer124
-    top: 150px
-    left: 50px
-    z-index: 9
-  #layer127
-    top: 400px
-    left: 50px
-    z-index: 8
-  #layer128
-    top: 640px
-    left: 50px
-    z-index: 7
   .layer
     position: absolute
+    left: 40px
     width: 326px
     height: 80px
     transform: perspective(400px) rotateX(45deg)

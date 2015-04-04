@@ -4,26 +4,33 @@ block head
 
 block content
   #header
-    #home
-    #title
-      h1= title
-    #page
-      #page-dropwdown
-    #add-page
+    ul
+      li#home
+      li#title
+        h1= title
+      li#page-container
+        #page
+          | PAGE: 
+          = page
+        #page-dropwdown
+      li#add-page-container
+        #add-page
 
   ul#images(ng-controller='ImageController')
     li(ng-repeat='image in images', data-depth="{{image._id}}")
       img(src='{{image.path}}')
 
   
-  #layers(ng-controller='ImageController')
-    .layer(ng-repeat='image in images', id='{{image._id}}', style='top: {{image.depth}}%')
-      .image-container
-        .image(style="background-image: url({{image.path}})")
-      .content
-        .name
-          {{image.name || "untitled"}}
-        .delete
+  #right-panel
+    #layers(ng-controller='ImageController')
+      
+      .layer(ng-repeat='image in images', id='{{image._id}}', style='top: {{image.depth}}%')
+        .image-container
+          .image(style="background-image: url({{image.path}})")
+        .content
+          .name
+            {{image.name || "untitled"}}
+          .delete
 
 
 

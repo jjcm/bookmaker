@@ -2,46 +2,107 @@ html {
   height: 100%;
 }
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
   background-color: #333;
   color: #ddd;
-  height: 100%;
-  width: 100%;
+  margin: 0;
 }
 a {
   color: #99b7ff;
 }
-#layers {
+#header {
+  background-color: #252629;
+  overflow: hidden;
+}
+#header ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+#header li {
+  float: left;
+  height: 96px;
+}
+#header #home {
+  width: 234px;
+  background-image: url("/images/nonio-logo.png");
+}
+#header #title {
+  padding: 0 24px;
+  background-color: #36383b;
+}
+#header #title h1 {
+  padding-top: 24px;
+  margin: 0;
+  font-weight: 300;
+  text-transform: capitalize;
+}
+#header #page-container {
+  margin-left: 48px;
+  color: #fff;
+}
+#header #page-container #page {
+  margin-top: 24px;
+  height: 48px;
+  border-radius: 4px;
+  background-color: #f44255;
+  box-sizing: border-box;
+  font-size: 18px;
+  text-transform: uppercase;
+  padding: 11px 12px;
+  width: 180px;
+  background-image: url("/images/down-chevron.png");
+  background-repeat: no-repeat;
+  background-position: 154px center;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+#header #page-container #page:hover {
+  background-color: #fa3045;
+  transition: none;
+}
+#header #page-container #page-dropwdown {
+  display: none;
+}
+#header #add-page-container {
+  margin-left: 12px;
+}
+#header #add-page-container #add-page {
+  height: 48px;
+  width: 48px;
+  cursor: pointer;
+  margin-top: 24px;
+  border-radius: 4px;
+  background-color: #f44255;
+  background-image: url("/images/add.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+#header #add-page-container #add-page:hover {
+  background-color: #fa3045;
+}
+#right-panel {
   position: absolute;
+  background-color: #2e2f32;
   right: 0px;
   top: 0px;
+  width: 500px;
+  box-sizing: border-box;
+  padding-top: 96px;
+  height: 100%;
+  overflow: hidden;
+}
+#layers {
+  position: relative;
+  display: inline-block;
   background-color: #191919;
   width: 500px;
   height: 100%;
 }
-#layers #layer123 {
-  top: 100px;
-  left: 50px;
-  z-index: 10;
-}
-#layers #layer124 {
-  top: 150px;
-  left: 50px;
-  z-index: 9;
-}
-#layers #layer127 {
-  top: 400px;
-  left: 50px;
-  z-index: 8;
-}
-#layers #layer128 {
-  top: 640px;
-  left: 50px;
-  z-index: 7;
-}
 #layers .layer {
   position: absolute;
+  left: 40px;
   width: 326px;
   height: 80px;
   transform: perspective(400px) rotateX(45deg);
