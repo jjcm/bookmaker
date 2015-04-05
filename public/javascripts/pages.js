@@ -14,17 +14,67 @@ app.controller('ImageController', function($scope, $http){
 var bookmaker = {
   init: function(){
     layer.init()
+    weight.init()
 
     document.addEventListener('mousemove', bookmaker.mouseMove)
     document.addEventListener('mouseup', bookmaker.mouseUp)
   },
+
   mouseMove: function(e){
-    if(layer.isMouseDown)
-      layer.mouseMove(e)
+    if(layer.isMouseDown) layer.mouseMove(e)
+    if(weight.isMouseDown) weight.mouseMove(e)
   },
+
   mouseUp: function(e){
-    if(layer.isMouseDown)
-      layer.mouseUp(e)
+    if(layer.isMouseDown) layer.mouseUp(e)
+    if(weight.isMouseDown) weight.mouseUp(e)
+  }
+}
+
+var weight = {
+  init: function(){
+    $('x-weight-control').addEventListener('mousedown', weight.mouseDown)
+    $('y-weight-control').addEventListener('mousedown', weight.mouseDown)
+  },
+
+  active: null,
+  x: 50,
+  y: 50,
+  dom: null,
+  innerBar: null,
+  isMouseDown: false,
+
+  mouseDown: function(e){
+    weight.dom = weight.getDomFromChild(e.toElement)
+    if(weight.dom){
+      weight.isMouseDown = true
+      document.body.classList.add('dragging')
+      weight.innerBar = weight.dom.getElementsByClassName('inner-bar')[0]
+      weight.active = weight.dom.id.charAt(0)
+    }
+  },
+
+  mouseMove: function(e){
+    weight.innerBar.style.width = weight.getWidthFromPosition(e.layerX) + "%"
+  },
+
+  mouseUp: function(e){
+    weight.isMouseDown = false
+  },
+
+  getWidthFromPosition: function(p){
+    offset = p - weight.dom.offsetLeft - 8
+    if(offset < 0) return 0
+    if(offset > weight.dom.offsetWidth - 16) return 100
+    return offset * 100 / (weight.dom.offsetWidth - 16)
+  },
+
+  getDomFromChild: function(e){
+    if(e.className == 'bar-container')
+      return e
+    if(e.parentElement)
+      return weight.getDomFromChild(e.parentElement)
+    return null
   }
 }
 
@@ -32,9 +82,15 @@ var layer = {
   init: function(){
     $('layers').addEventListener('mousedown', layer.mouseDown)
   },
-  activeLayer: null,
+
+  dom: null,
   depth: null,
   isMouseDown: false,
+  spacingInterval: 5,
+  yDown: 0,
+  yPos: 0,
+  innerHeight: 0,
+
   mouseDown: function(e){
     layer.isMouseDown = true
     element = e.toElement
@@ -42,20 +98,113 @@ var layer = {
       console.log('delete this div')
     }
     else{
-      layer.activeLayer = layer.getLayerFromChild(element)
-      layer.depth = Number.parseInt(layer.activeLayer.dataset.depth)
-
-      console.log(layer.activeLayer)
-      console.log(layer.depth)
+      dom = layer.getLayerFromChild(element)
+      if(dom){
+        document.body.classList.add('dragging')
+        layer.yDown = e.y
+        layer.dom = layer.getLayerFromChild(element)
+        layer.dom.style.transition = ""
+        layer.yPos = layer.dom.offsetTop
+        layer.depth = Number.parseInt(layer.dom.dataset.depth)
+        layer.innerHeight = window.innerHeight - 96 - 120
+      }
     }
   },
+
   mouseMove: function(e){
-    console.log("mousemove")
+    difference = layer.yDown - e.y
+    position = layer.yPos - difference
+    if(position < 0) position = 0
+    if(position > layer.innerHeight) position = layer.innerHeight
+    layer.dom.style.top = position + "px"
+    layer.dom.style.zIndex = Math.ceil(100 - layer.getPercentFromPx(layer.dom.offsetTop))
   },
+
+  mouseUp: function(e){
+    if(layer.dom){
+      layer.isMouseDown = false
+      document.body.classList.remove('dragging')
+
+      layer.yPos = layer.getPercentFromPx(layer.dom.offsetTop)
+      layer.dom.style.top = layer.yPos + "%"
+
+      //set the yPos to an integer percent, add the transition state, 
+      //then apply the yPos to the dom
+      roundedPos = layer.closestFreeSpace(layer.yPos)
+      /*
+      roundedPos = Math.round(layer.yPos / layer.spacingInterval) * layer.spacingInterval
+      if(!layer.freeSpaceForLayerAtPosition(roundedPos)){
+        console.log("collision found")
+        console.log("closest free space: " + layer.closestFreeSpace(layer.yPos))
+      }
+     */
+      layer.yPos = roundedPos
+      layer.dom.style.transition = "top 0.1s ease-in-out, z-index 0.1s ease-in-out"
+      setTimeout(function(){
+        layer.dom.style.top = layer.yPos + "%"
+        layer.dom.style.zIndex = 100 - layer.yPos
+
+        //remove the transition once it completes
+        setTimeout(function(){ 
+          layer.dom.style.transition = "" 
+          layer.dom = null
+        }, 100)
+
+      }, 50)
+      layer.dom.dataset.depth = layer.yPos
+    }
+  },
+
+  getPxFromPercent: function(p){
+    return (p * layer.innerHeight) / 100
+  },
+
+  getPercentFromPx: function(p){
+    return (p) * 100 / layer.innerHeight
+  },
+
+  freeSpaceForLayerAtPosition: function(p){
+    if(p > 100 || p < 0) return false
+
+    layers = $('layers').children
+    for(var i = 0; i < layers.length; i++){
+      if(layers[i] != layer.dom)
+        if(layers[i].dataset.depth == p)
+          return false
+    }
+
+    return true
+  },
+
+  closestFreeSpace: function(p){
+    roundedPos = Math.round(layer.yPos / layer.spacingInterval) * layer.spacingInterval
+
+    for(var i = 0; i < 100 / layer.spacingInterval; i++){
+      delta = layer.spacingInterval * i
+      //we're above the collision
+      if(p < roundedPos){
+        if(layer.freeSpaceForLayerAtPosition(roundedPos - delta))
+          return roundedPos - delta
+
+        if(layer.freeSpaceForLayerAtPosition(roundedPos + delta))
+          return roundedPos + delta
+      }
+      //we're below the collision
+      else{
+        if(layer.freeSpaceForLayerAtPosition(roundedPos + delta))
+          return roundedPos + delta
+
+        if(layer.freeSpaceForLayerAtPosition(roundedPos - delta))
+          return roundedPos - delta
+      }
+
+    }
+  },
+
   getLayerFromChild: function(e){
     if(e.classList.contains("layer"))
       return e
-    if(!e.parentElement)
+    if(!e.parentElement || e.id == layers)
       return null
     return layer.getLayerFromChild(e.parentElement)
   }

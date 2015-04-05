@@ -94,8 +94,8 @@ a
     height: header-height
     width: 504px
     top: 0px
-    padding-top: 30px
     #x-weight, #y-weight
+      margin-top: 30px
       margin-left: 40px
       width: 196px
       float: left
@@ -175,16 +175,12 @@ a
         background-color: rgba(#FFFFFF33)
         transition: none
 
-    .shadow
-      opacity: 0.8
-      width: 355px
-      height: 111px
-      position: absolute
-      top: 0px
-      left: -14px
-      background-image: url(/images/layerShadow.png)
   .layer:active
     cursor: -webkit-grabbing
 
+
+.dragging
+  ::selection
+    background: none
 #images
   list-style: none
