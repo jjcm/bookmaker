@@ -15,6 +15,7 @@ var bookmaker = {
   init: function(){
     layer.init()
     weight.init()
+    pageSelect.init()
 
     document.addEventListener('mousemove', bookmaker.mouseMove)
     document.addEventListener('mouseup', bookmaker.mouseUp)
@@ -28,6 +29,15 @@ var bookmaker = {
   mouseUp: function(e){
     if(layer.isMouseDown) layer.mouseUp(e)
     if(weight.isMouseDown) weight.mouseUp(e)
+  }
+}
+
+var pageSelect = {
+  init: function(){
+    $('page-container').addEventListener('mousedown', pageSelect.showDropdown)
+  },
+  showDropdown: function(){
+    $('page-dropdown').style.display = "block"
   }
 }
 

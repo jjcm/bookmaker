@@ -13,7 +13,7 @@ a {
 }
 #header {
   background-color: #252629;
-  overflow: hidden;
+  height: 96px;
 }
 #header ul {
   list-style: none;
@@ -62,8 +62,26 @@ a {
   background-color: #fa3045;
   transition: none;
 }
-#header #page-container #page-dropwdown {
+#header #page-container #page-dropdown {
   display: none;
+  background-color: #f44255;
+  margin-top: -5px;
+  border-radius: 4px;
+  padding-top: 7px;
+  padding-bottom: 4px;
+}
+#header #page-container #page-dropdown li {
+  padding-left: 12px;
+  padding-top: 5px;
+  box-sizing: border-box;
+  height: 36px;
+  float: none;
+  font-size: 18px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+#header #page-container #page-dropdown li:hover {
+  background-color: rgba(255,255,255,0.1);
 }
 #header #add-page-container {
   margin-left: 12px;

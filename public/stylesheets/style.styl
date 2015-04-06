@@ -19,7 +19,7 @@ a
 
 #header
   background-color: #252629
-  overflow: hidden
+  height: header-height
   ul
     list-style: none
     margin: 0
@@ -59,8 +59,24 @@ a
     #page:hover
       background-color: red-highlight
       transition: none
-    #page-dropwdown
+    #page-dropdown
       display: none
+      background-color: red
+      margin-top: -5px
+      border-radius: 4px
+      padding-top: 7px
+      padding-bottom: 4px
+      li
+        padding-left: 12px
+        padding-top: 5px
+        box-sizing: border-box
+        height: 36px
+        float: none
+        font-size: 18px
+        text-transform: uppercase
+        cursor: pointer
+      li:hover
+        background-color: rgba(255,255,255,0.1)
   #add-page-container
     margin-left: 12px
     #add-page
