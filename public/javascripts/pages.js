@@ -16,9 +16,15 @@ var bookmaker = {
     layer.init()
     weight.init()
     pageSelect.init()
+    util.init()
 
+    document.addEventListener('mousedown', bookmaker.mouseDown)
     document.addEventListener('mousemove', bookmaker.mouseMove)
     document.addEventListener('mouseup', bookmaker.mouseUp)
+  },
+
+  mouseDown: function(e){
+    if(pageSelect.dropdownOpen && pageSelect.clickOutsideContainer(e.toElement)) pageSelect.hideDropdown()
   },
 
   mouseMove: function(e){
@@ -27,17 +33,57 @@ var bookmaker = {
   },
 
   mouseUp: function(e){
+    document.body.classList.remove('dragging')
     if(layer.isMouseDown) layer.mouseUp(e)
     if(weight.isMouseDown) weight.mouseUp(e)
+    if(pageSelect.isMouseDown) pageSelect.mouseUp(e)
+  }
+}
+
+var util = {
+  init: function(){
+    HTMLElement.prototype.decendentOf = function(e){
+      if(this == e) return true
+      if(this.parentElement) return this.parentElement.decendentOf(e)
+      return false
+    }
   }
 }
 
 var pageSelect = {
   init: function(){
     $('page-container').addEventListener('mousedown', pageSelect.showDropdown)
+    $('page').addEventListener('click', pageSelect.hideDropdown)
   },
+
+  dropdownOpen: false,
+  isMouseDown: false,
+
   showDropdown: function(){
-    $('page-dropdown').style.display = "block"
+    if(!pageSelect.dropdownOpen){
+      document.body.classList.add('dragging')
+      $('page-dropdown').style.display = "block"
+      pageSelect.dropdownOpen = true
+      pageSelect.isMouseDown = true
+    }
+  },
+
+  hideDropdown: function(){
+    if(!pageSelect.isMouseDown && pageSelect.dropdownOpen){
+      $('page-dropdown').style.display = "none"
+      pageSelect.dropdownOpen = false
+    }
+  },
+
+  mouseUp: function(e){
+    console.log("mouseup")
+    pageSelect.isMouseDown = false
+  },
+
+  clickOutsideContainer: function(e){
+    if(e == $('page-container')) return false
+    if(e.parentElement) return pageSelect.clickOutsideContainer(e.parentElement)
+    return true
   }
 }
 
@@ -61,6 +107,7 @@ var weight = {
       document.body.classList.add('dragging')
       weight.innerBar = weight.dom.getElementsByClassName('inner-bar')[0]
       weight.active = weight.dom.id.charAt(0)
+      weight.innerBar.style.width = weight.getWidthFromPosition(e.layerX) + "%"
     }
   },
 
@@ -133,7 +180,6 @@ var layer = {
   mouseUp: function(e){
     if(layer.dom){
       layer.isMouseDown = false
-      document.body.classList.remove('dragging')
 
       layer.yPos = layer.getPercentFromPx(layer.dom.offsetTop)
       layer.dom.style.top = layer.yPos + "%"
@@ -214,7 +260,7 @@ var layer = {
   getLayerFromChild: function(e){
     if(e.classList.contains("layer"))
       return e
-    if(!e.parentElement || e.id == layers)
+    if(!e.parentElement || e.id == "layers")
       return null
     return layer.getLayerFromChild(e.parentElement)
   }
