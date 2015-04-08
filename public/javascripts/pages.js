@@ -24,7 +24,7 @@ var bookmaker = {
   },
 
   mouseDown: function(e){
-    if(pageSelect.dropdownOpen && pageSelect.clickOutsideContainer(e.toElement)) pageSelect.hideDropdown()
+    if(pageSelect.dropdownOpen && !e.toElement.descendantOf($('page-container'))) pageSelect.hideDropdown()
   },
 
   mouseMove: function(e){
@@ -42,9 +42,9 @@ var bookmaker = {
 
 var util = {
   init: function(){
-    HTMLElement.prototype.decendentOf = function(e){
+    HTMLElement.prototype.descendantOf = function(e){
       if(this == e) return true
-      if(this.parentElement) return this.parentElement.decendentOf(e)
+      if(this.parentElement) return this.parentElement.descendantOf(e)
       return false
     }
   }
@@ -81,9 +81,7 @@ var pageSelect = {
   },
 
   clickOutsideContainer: function(e){
-    if(e == $('page-container')) return false
-    if(e.parentElement) return pageSelect.clickOutsideContainer(e.parentElement)
-    return true
+    return !e.descendantOf($('page-container'))
   }
 }
 
