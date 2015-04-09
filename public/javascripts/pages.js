@@ -52,11 +52,12 @@ var util = {
 
 var pageSelect = {
   init: function(){
-    $('page-container').addEventListener('mousedown', pageSelect.showDropdown)
-    $('page').addEventListener('click', pageSelect.hideDropdown)
+    $('page-container').addEventListener('mousedown', pageSelect.mouseDown)
   },
 
   dropdownOpen: false,
+  //clickedOpen is for when they aren't dragging to select an element, but are rather clicking once to open, then clicking once again to select
+  clickedOpen: false,
   isMouseDown: false,
 
   showDropdown: function(){
@@ -64,7 +65,6 @@ var pageSelect = {
       document.body.classList.add('dragging')
       $('page-dropdown').style.display = "block"
       pageSelect.dropdownOpen = true
-      pageSelect.isMouseDown = true
     }
   },
 
@@ -72,12 +72,20 @@ var pageSelect = {
     if(!pageSelect.isMouseDown && pageSelect.dropdownOpen){
       $('page-dropdown').style.display = "none"
       pageSelect.dropdownOpen = false
+      pageSelect.clickedOpen = false
     }
+  },
+
+  mouseDown: function(e){
+    pageSelect.isMouseDown = true
+    pageSelect.showDropdown(e)
   },
 
   mouseUp: function(e){
     console.log("mouseup")
     pageSelect.isMouseDown = false
+    if(!pageSelect.clickedOpen) pageSelect.clickedOpen = true
+    else pageSelect.hideDropdown()
   },
 
   clickOutsideContainer: function(e){

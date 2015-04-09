@@ -83,6 +83,11 @@ a {
 #header #page-container #page-dropdown li:hover {
   background-color: rgba(255,255,255,0.1);
 }
+#header #page-container #page-dropdown::selection,
+#header #page-container #page-dropdown li::selection,
+#header #page-container #page::selection {
+  background: none;
+}
 #header #add-page-container {
   margin-left: 12px;
 }
