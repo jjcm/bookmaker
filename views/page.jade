@@ -25,9 +25,8 @@ block content
         #add-page
 
   ul#images(ng-controller='ImageController')
-    li(ng-repeat='image in images', data-depth="{{image._id}}")
-      img(src='{{image.path}}')
-
+    li(ng-repeat='image in images', data-depth="{{image.depth}}")
+      img(src='{{image.path}}', style='left: {{image.offsetX}}; top: {{image.offsetY}};')
   
   #right-panel
     #weight-adjustment
