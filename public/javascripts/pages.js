@@ -18,6 +18,9 @@ var bookmaker = {
     pageSelect.init()
     util.init()
 
+    document.addEventListener('drop', layer.drop)
+    document.addEventListener('dragover', layer.drop)
+    document.addEventListener('dragleave', layer.drop)
     document.addEventListener('mousedown', bookmaker.mouseDown)
     document.addEventListener('mousemove', bookmaker.mouseMove)
     document.addEventListener('mouseup', bookmaker.mouseUp)
@@ -215,6 +218,12 @@ var layer = {
       }, 50)
       layer.dom.dataset.depth = layer.yPos
     }
+  },
+
+  drop: function(e){
+    e.stopPropagation()
+    e.preventDefault()
+    console.log(e)
   },
 
   getPxFromPercent: function(p){
