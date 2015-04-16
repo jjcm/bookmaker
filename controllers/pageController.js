@@ -14,16 +14,20 @@ var Page = {
       res.json(images)
     })
   },
+  test: function(req, res, next){
+      console.log('test')
+      res.send('test response')
+  },
   createImage: function(req, res, next){
+    console.log("#####################################################################")
     var form = new multiparty.Form();
     var image
     var title
     var file
     var type
-    console.log('AYY LMAO')
-    console.log(req.params.id)
-
-
+    console.log(req.params)
+    console.log(req.body)
+    
     form.on('error', next)
     form.on('close', function(){
         switch(file.headers['content-type']){

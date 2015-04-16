@@ -1,6 +1,7 @@
 function $(id) { return document.getElementById(id);}
 
 var app = angular.module('app', [])
+var http = null
 app.controller('ImageController', function($scope, $http){
   $http.get('/page/' + page)
     .success(function(images){
@@ -9,6 +10,7 @@ app.controller('ImageController', function($scope, $http){
     .error(function(err){
       console.log('images not found for page')
     })
+  http = $http
 })
 
 var bookmaker = {
@@ -223,7 +225,15 @@ var layer = {
   drop: function(e){
     e.stopPropagation()
     e.preventDefault()
-    console.log(e)
+    if(e.type == "drop"){
+      console.log(e)
+      http.post('/page', {title: "test post"}, {headers: {'Content-Type': 'application/json', enctype:'multipart/form-data'}}).success(function(data, status, headers, config){
+        console.log('post success')
+      }).
+      error(function(data, status, headers, config){
+        console.log('post error')
+      })
+    }
   },
 
   getPxFromPercent: function(p){
