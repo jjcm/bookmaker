@@ -1,8 +1,8 @@
 function $(id) { return document.getElementById(id);}
 
-var app = angular.module('app', [])
+var app = angular.module('app', ['angularFileUpload'])
 var http = null
-app.controller('ImageController', function($scope, $http){
+app.controller('ImageController', ['$scope', '$http', '$upload', function($scope, $http){
   $http.get('/page/' + page)
     .success(function(images){
       $scope.images = images
@@ -11,7 +11,7 @@ app.controller('ImageController', function($scope, $http){
       console.log('images not found for page')
     })
   http = $http
-})
+}])
 
 var bookmaker = {
   init: function(){
