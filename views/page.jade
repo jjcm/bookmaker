@@ -43,7 +43,7 @@ block content
           .bar
             .inner-bar
 
-    #layers(ng-controller='ImageController')
+    #layers(ng-controller='ImageController', ng-file-drop, ng-over-class='dragover', ng-multiple='true', ng-model='files')
       
       .layer(ng-repeat='image in images', id='{{image._id}}', style='top: {{image.depth || 0}}%; z-index: {{100 - image.depth || 100}};', data-depth='{{image.depth || 0}}')
         .image-container

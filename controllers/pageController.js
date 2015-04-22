@@ -15,8 +15,45 @@ var Page = {
     })
   },
   test: function(req, res, next){
-      console.log('test')
-      res.send('test response')
+    var type
+    var file = req.files.file
+    console.log('test')
+    console.log(req.body)
+
+    console.log(file.type)
+    switch(file.type){
+    case "image/jpeg":
+        type = ".jpg"
+        break
+    case "image/gif":
+        type = ".gif"
+        break
+    case "image/png":
+        type = ".png"
+        break
+    }
+    console.log(type)
+
+
+    /*
+    image = new Image({
+    page: 1,
+    book: book
+    })
+
+    image.path = "/images/" + image._id + type
+
+    image.save(function(err, post){
+    if(err) {return next(err)}
+    console.log("saved!")
+    fs.copy(file.path, "./public" + image.path, function(){
+        console.log("copied!")
+        res.send(format('\nuploaded %s (%d Kb) as %s\n<img src="%s"/>', file.originalFilename, file.size / 1024 | 0, title, image.path))
+    })
+    })
+    console.log(image)
+    */
+    res.send(file.path)
   },
   createImage: function(req, res, next){
     console.log("#####################################################################")

@@ -2,7 +2,7 @@ function $(id) { return document.getElementById(id);}
 
 var app = angular.module('app', ['angularFileUpload'])
 var http = null
-app.controller('ImageController', ['$scope', '$http', '$upload', function($scope, $http){
+app.controller('ImageController', ['$scope', '$http', '$upload', function($scope, $http, $upload){
   $http.get('/page/' + page)
     .success(function(images){
       $scope.images = images
@@ -10,7 +10,29 @@ app.controller('ImageController', ['$scope', '$http', '$upload', function($scope
     .error(function(err){
       console.log('images not found for page')
     })
-  http = $http
+
+  $scope.$watch('files', function(){
+    console.log('ayy lmao')
+    $scope.upload($scope.files)
+  })
+
+  $scope.upload = function(files){
+    if (files && files.length) {
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            $upload.upload({
+                url: '/test',
+                fields: {'name': 'bob'},
+                file: file
+            }).progress(function (evt) {
+                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+            }).success(function (data, status, headers, config) {
+                console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+            });
+        }
+    }
+  }
 }])
 
 var bookmaker = {
@@ -20,9 +42,9 @@ var bookmaker = {
     pageSelect.init()
     util.init()
 
-    document.addEventListener('drop', layer.drop)
-    document.addEventListener('dragover', layer.drop)
-    document.addEventListener('dragleave', layer.drop)
+    //document.addEventListener('drop', layer.drop)
+    //document.addEventListener('dragover', layer.drop)
+    //document.addEventListener('dragleave', layer.drop)
     document.addEventListener('mousedown', bookmaker.mouseDown)
     document.addEventListener('mousemove', bookmaker.mouseMove)
     document.addEventListener('mouseup', bookmaker.mouseUp)
@@ -160,7 +182,6 @@ var layer = {
   innerHeight: 0,
 
   mouseDown: function(e){
-    layer.isMouseDown = true
     element = e.toElement
     if(element.className == 'delete'){
       console.log('delete this div')
@@ -168,6 +189,7 @@ var layer = {
     else{
       dom = layer.getLayerFromChild(element)
       if(dom){
+        layer.isMouseDown = true
         document.body.classList.add('dragging')
         layer.yDown = e.y
         layer.dom = layer.getLayerFromChild(element)
@@ -223,6 +245,7 @@ var layer = {
   },
 
   drop: function(e){
+    /*
     e.stopPropagation()
     e.preventDefault()
     if(e.type == "drop"){
@@ -234,6 +257,7 @@ var layer = {
         console.log('post error')
       })
     }
+   */
   },
 
   getPxFromPercent: function(p){
