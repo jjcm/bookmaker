@@ -9,11 +9,20 @@ var Page = {
     res.render('page', { title: req.params.book, page: req.params.page});
   },
   getImages: function(req, res, next){
-    response = Image.find({book: req.params.id}, function(err, images){
+    response = Image.find({page: req.params.id}, function(err, images){
       if(err) { return next(err)}
       res.json(images)
     })
   },
+  getBook: function(req, res, next){
+    response = Book.findOne({shortName: req.params.id}, function(err, book){
+      if(err) { 
+        console.log('no book found!')
+        return next(err)
+      }
+      res.json(book)
+    })
+  }, 
   test: function(req, res, next){
     var type
     var file = req.files.file
@@ -32,8 +41,6 @@ var Page = {
         type = ".png"
         break
     }
-    console.log(type)
-
 
     /*
     image = new Image({

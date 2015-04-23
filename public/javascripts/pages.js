@@ -3,6 +3,7 @@ function $(id) { return document.getElementById(id);}
 var app = angular.module('app', ['angularFileUpload'])
 var http = null
 app.controller('ImageController', ['$scope', '$http', '$upload', function($scope, $http, $upload){
+  console.log(title)
   $http.get('/page/' + page)
     .success(function(images){
       $scope.images = images
