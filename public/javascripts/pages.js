@@ -3,8 +3,15 @@ function $(id) { return document.getElementById(id);}
 var app = angular.module('app', ['angularFileUpload'])
 var http = null
 app.controller('ImageController', ['$scope', '$http', '$upload', function($scope, $http, $upload){
-  console.log(title)
-  $http.get('/page/' + page)
+  $http.get('/api/book/' + book)
+    .success(function(book){
+      bookmaker.book = book
+      console.log(book)
+    })
+    .error(function(err){
+      console.log('book not found')
+    })
+  $http.get('/api/image/' + book + "/" + page)
     .success(function(images){
       $scope.images = images
     })
@@ -12,8 +19,8 @@ app.controller('ImageController', ['$scope', '$http', '$upload', function($scope
       console.log('images not found for page')
     })
 
+
   $scope.$watch('files', function(){
-    console.log('ayy lmao')
     $scope.upload($scope.files)
   })
 
@@ -22,8 +29,8 @@ app.controller('ImageController', ['$scope', '$http', '$upload', function($scope
         for (var i = 0; i < files.length; i++) {
             var file = files[i];
             $upload.upload({
-                url: '/test',
-                fields: {'name': 'bob'},
+                url: '/api/image/create',
+                fields: {page: bookmaker.page, book: bookmaker.book.shortName},
                 file: file
             }).progress(function (evt) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
@@ -43,6 +50,8 @@ var bookmaker = {
     pageSelect.init()
     util.init()
 
+    bookmaker.page = page
+
     //document.addEventListener('drop', layer.drop)
     //document.addEventListener('dragover', layer.drop)
     //document.addEventListener('dragleave', layer.drop)
@@ -50,6 +59,9 @@ var bookmaker = {
     document.addEventListener('mousemove', bookmaker.mouseMove)
     document.addEventListener('mouseup', bookmaker.mouseUp)
   },
+
+  book: null,
+  page: null,
 
   mouseDown: function(e){
     if(pageSelect.dropdownOpen && !e.toElement.descendantOf($('page-container'))) pageSelect.hideDropdown()

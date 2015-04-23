@@ -2,27 +2,31 @@ var multiparty = require('multiparty')
 var fs = require('fs-extra')
 var Image = require('../models/imageModel')
 var format = require('util').format
+var Page = require('../models/pageModel')
 
-var Page = {
+var Pages = {
   view: function(req, res, next){
     console.log(req.params.book)
     res.render('page', { title: req.params.book, page: req.params.page});
   },
-  getImages: function(req, res, next){
-    response = Image.find({page: req.params.id}, function(err, images){
-      if(err) { return next(err)}
-      res.json(images)
+  getPage: function(req, res, next){
+    response = Page.findOne({book: req.params.book, number: req.params.page}, function(err, page){
+      if(err) { return next(err) }
+      if(page){
+        res.json(page)
+      }
+      else{
+        page = new Page({
+          book: req.params.book,
+          number: req.params.page
+        })
+        page.save(function(err, page){
+          if(err) {return next(err)}
+          res.send(page)
+        })
+      }
     })
   },
-  getBook: function(req, res, next){
-    response = Book.findOne({shortName: req.params.id}, function(err, book){
-      if(err) { 
-        console.log('no book found!')
-        return next(err)
-      }
-      res.json(book)
-    })
-  }, 
   test: function(req, res, next){
     var type
     var file = req.files.file
@@ -130,4 +134,4 @@ var Page = {
   }
 }
 
-module.exports = Page
+module.exports = Pages
