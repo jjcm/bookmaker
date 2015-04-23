@@ -33,7 +33,8 @@ var Images = {
 
     image = new Image({
       page: req.body.page,
-      book: req.body.book
+      book: req.body.book,
+      name: file.originalFilename.slice(0, -4)
     })
 
     console.log(image)
