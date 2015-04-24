@@ -7,9 +7,23 @@ var Books = {
       if(book){
         Page.find({book: req.params.id}, function(err, pages){
           if(err) return next(err)
-          book.pages = pages
-          console.log(book)
-          res.json(book)
+          if(!pages.length){
+            page = new Page({
+              book: req.params.id,
+              number: 1
+            })
+            page.save(function(err, page){
+              if(err) {return next(err)}
+              pages.push(page)
+              book.pages = pages
+              res.json(book)
+            })
+          }
+          else{
+            book.pages = pages
+            console.log(book)
+            res.json(book)
+          }
         })
       }
       else{

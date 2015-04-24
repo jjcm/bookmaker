@@ -5,7 +5,7 @@ var format = require('util').format
 
 var Images = {
   getImage: function(req, res, next){
-    response = Image.find({_page: req.params.id}, function(err, image){
+    response = Image.find({page: req.params.id}, function(err, image){
       if(err) { return next(err) }
       res.json(image)
     })
@@ -39,7 +39,7 @@ var Images = {
 
     console.log(image)
 
-    image.path = format("/images/%s/%s/%s%s", image.book, image.page, image._id, type)
+    image.path = format("/images/book/%s/%s/%s%s", image.book, image.page, image._id, type)
 
     console.log(image.path)
     image.save(function(err, post){
@@ -50,7 +50,10 @@ var Images = {
           res.json(image)
       })
     })
-  }
+  },
+  update: function(req, res, next){
+
+  },
 }
 
 module.exports = Images

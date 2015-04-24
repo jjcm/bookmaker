@@ -9,6 +9,7 @@ var Image = db.model('Image', {
   height: { type: Number, required: false},
   left:   { type: Number, required: false},
   top:    { type: Number, required: false},
+  depth:  { type: Number, required: false, default: 50},
   page:   { type: Number, required: false},
   book:   { type: String, required: false}
 })

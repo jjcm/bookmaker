@@ -14,6 +14,7 @@ app.controller('ImageController', ['$scope', '$http', '$upload', function($scope
   $http.get('/api/image/' + book + "/" + page)
     .success(function(images){
       $scope.images = images
+      bookmaker.images = images
     })
     .error(function(err){
       console.log('images not found for page')
@@ -37,6 +38,12 @@ app.controller('ImageController', ['$scope', '$http', '$upload', function($scope
                 console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
             }).success(function (data, status, headers, config) {
                 console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                $scope.images.push(data)
+
+                //this is bad code, should be a directive
+                setTimeout(function(){
+                  bookmaker.parallax.updateLayers()
+                }, 50)
             });
         }
     }
@@ -58,10 +65,17 @@ var bookmaker = {
     document.addEventListener('mousedown', bookmaker.mouseDown)
     document.addEventListener('mousemove', bookmaker.mouseMove)
     document.addEventListener('mouseup', bookmaker.mouseUp)
+
+    //this is bad code, should be a directive
+    setTimeout(function(){
+      bookmaker.parallax = new Parallax($('images'))
+    }, 200)
   },
 
   book: null,
   page: null,
+  images: null,
+  parallax: null,
 
   mouseDown: function(e){
     if(pageSelect.dropdownOpen && !e.toElement.descendantOf($('page-container'))) pageSelect.hideDropdown()
@@ -195,6 +209,8 @@ var layer = {
   innerHeight: 0,
 
   mouseDown: function(e){
+    e.stopPropagation()
+    e.preventDefault()
     element = e.toElement
     if(element.className == 'delete'){
       console.log('delete this div')
@@ -215,6 +231,8 @@ var layer = {
   },
 
   mouseMove: function(e){
+    e.stopPropagation()
+    e.preventDefault()
     difference = layer.yDown - e.y
     position = layer.yPos - difference
     if(position < 0) position = 0

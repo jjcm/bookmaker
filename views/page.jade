@@ -3,61 +3,63 @@ extends layout
 block head
 
 block content
-  #header
-    ul
-      li#home
-      li#title
-        h1= title
-      li#page-container
-        #page
-          | PAGE: 
-          = page
-        ul#page-dropdown
-          li page 1
-          li page 2
-          li page 4
-          li page 5
-          li page 7
-          li page 8
+  #container(ng-controller='ImageController')
+    #header
+      ul
+        li#home
+        li#title
+          h1= title
+        li#page-container
+          #page
+            | PAGE: 
+            = page
+          ul#page-dropdown
+            li page 1
+            li page 2
+            li page 4
+            li page 5
+            li page 7
+            li page 8
 
 
-      li#add-page-container
-        #add-page
+        li#add-page-container
+          #add-page
 
-  ul#images(ng-controller='ImageController')
-    li(ng-repeat='image in images', data-depth="{{image.depth}}")
-      img(src='{{image.path}}', style='left: {{image.offsetX}}; top: {{image.offsetY}};')
-  
-  #right-panel
-    #weight-adjustment
-      #x-weight
-        .label
-          | x-weight
-        #x-weight-control.bar-container
-          .bar
-            .inner-bar
-      #y-weight
-        .label
-          | y-weight
-        #y-weight-control.bar-container
-          .bar
-            .inner-bar
+    ul#images
+      li.layer(ng-repeat='image in images', data-depth="{{image.depth / 100}}")
+        img(src='{{image.path}}', style='left: {{image.offsetX}}; top: {{image.offsetY}};')
+    
+    #right-panel
+      #weight-adjustment
+        #x-weight
+          .label
+            | x-weight
+          #x-weight-control.bar-container
+            .bar
+              .inner-bar
+        #y-weight
+          .label
+            | y-weight
+          #y-weight-control.bar-container
+            .bar
+              .inner-bar
 
-    #layers(ng-controller='ImageController', ng-file-drop, ng-over-class='dragover', ng-multiple='true', ng-model='files')
-      
-      .layer(ng-repeat='image in images', id='{{image._id}}', style='top: {{image.depth || 0}}%; z-index: {{100 - image.depth || 100}};', data-depth='{{image.depth || 0}}')
-        .image-container
-          .image(style="background-image: url({{image.path}})")
-        .content
-          .name
-            {{image.name || "untitled"}}
-          .delete
+      #layers(ng-file-drop, ng-over-class='dragover', ng-multiple='true', ng-model='files')
+        
+        .layer(ng-repeat='image in images', id='{{image._id}}', style='top: {{image.depth || 0}}%; z-index: {{100 - image.depth || 100}};', data-depth='{{image.depth || 0}}')
+          .image-container
+            .image(style="background-image: url({{image.path}})")
+          .content
+            .name
+              {{image.name || "untitled"}}
+            .delete
 
 
 
   script(type="text/javascript")
     | var page = "!{page}"
     | var book = "!{title}"
+  script(src="/javascripts/parallax.min.js")
   script(src="/javascripts/pages.js")
 
 

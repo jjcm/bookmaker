@@ -7,7 +7,6 @@ var pages = require('./controllers/pageController')
 var multiparty = require('connect-multiparty')
 multipartyMiddleware = multiparty()
 
-router.post('/page', multipartyMiddleware, pages.createImage)
 router.post('/api/image/create', multipartyMiddleware, images.create)
 router.get('/api/image/:id', images.getImage)
 router.get('/api/image/:book/:page', images.getImages)
