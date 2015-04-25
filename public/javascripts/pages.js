@@ -2,15 +2,28 @@ function $(id) { return document.getElementById(id);}
 
 var app = angular.module('app', ['angularFileUpload'])
 var http = null
-app.controller('ImageController', ['$scope', '$http', '$upload', function($scope, $http, $upload){
+app.directive('onLastRepeat', function(){
+  return function(scope, element, attrs) {
+    if (scope.$last) setTimeout(function(){
+        scope.$emit('onRepeatLast', element, attrs);
+    }, 1);
+  };
+})
+app.controller('ImageController', ['$scope', '$http', '$upload', '$timeout', function($scope, $http, $upload, $timeout){
+  $scope.$on('onRepeatLast', function(scope, element, attrs){
+    console.log('update')
+    if(bookmaker.parallax)
+      bookmaker.parallax.updateLayers()
+  });
+
   $http.get('/api/book/' + book)
     .success(function(book){
       bookmaker.book = book
-      console.log(book)
     })
     .error(function(err){
       console.log('book not found')
     })
+
   $http.get('/api/image/' + book + "/" + page)
     .success(function(images){
       $scope.images = images
@@ -25,6 +38,23 @@ app.controller('ImageController', ['$scope', '$http', '$upload', function($scope
     $scope.upload($scope.files)
   })
 
+  $scope.mouseUp = function(e){
+    if(layer.dom){
+      layer.mouseUp(e)
+      var index 
+      for(var i = 0; i < $scope.images.length; i++){
+        if($scope.images[i]._id == layer.dom.id)
+          index = i
+      }
+      $timeout(function(){
+        $scope.images[index].depth = Number.parseInt(layer.dom.dataset.depth)
+        setTimeout(function(){
+          bookmaker.parallax.updateLayers()
+        }, 50)
+      }, 100)
+    }
+  }
+
   $scope.upload = function(files){
     if (files && files.length) {
         for (var i = 0; i < files.length; i++) {
@@ -35,15 +65,10 @@ app.controller('ImageController', ['$scope', '$http', '$upload', function($scope
                 file: file
             }).progress(function (evt) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+                //console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
             }).success(function (data, status, headers, config) {
-                console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                //console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
                 $scope.images.push(data)
-
-                //this is bad code, should be a directive
-                setTimeout(function(){
-                  bookmaker.parallax.updateLayers()
-                }, 50)
             });
         }
     }
@@ -136,7 +161,6 @@ var pageSelect = {
   },
 
   mouseUp: function(e){
-    console.log("mouseup")
     pageSelect.isMouseDown = false
     if(!pageSelect.clickedOpen) pageSelect.clickedOpen = true
     else pageSelect.hideDropdown()

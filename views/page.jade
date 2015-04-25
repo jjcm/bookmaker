@@ -3,7 +3,7 @@ extends layout
 block head
 
 block content
-  #container(ng-controller='ImageController')
+  #container(ng-controller='ImageController', ng-mouseup="mouseUp($event)")
     #header
       ul
         li#home
@@ -26,7 +26,7 @@ block content
           #add-page
 
     ul#images
-      li.layer(ng-repeat='image in images', data-depth="{{image.depth / 100}}")
+      li.layer(ng-repeat='image in images | orderBy: "depth"', data-depth="{{image.depth / 100}}")
         img(src='{{image.path}}', style='left: {{image.offsetX}}; top: {{image.offsetY}};')
     
     #right-panel
@@ -46,7 +46,7 @@ block content
 
       #layers(ng-file-drop, ng-over-class='dragover', ng-multiple='true', ng-model='files')
         
-        .layer(ng-repeat='image in images', id='{{image._id}}', style='top: {{image.depth || 0}}%; z-index: {{100 - image.depth || 100}};', data-depth='{{image.depth || 0}}')
+        .layer(ng-repeat='image in images', id='{{image._id}}', style='top: {{image.depth || 0}}%; z-index: {{100 - image.depth || 100}};', data-depth='{{image.depth || 0}}', on-last-repeat)
           .image-container
             .image(style="background-image: url({{image.path}})")
           .content
