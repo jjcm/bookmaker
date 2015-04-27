@@ -52,7 +52,10 @@ var Images = {
     })
   },
   update: function(req, res, next){
-
+    console.log(req.body)
+    var img = Image.findOne({_id: req.body._id})
+    console.log("DATABSE")
+    console.log(img)
   },
 }
 

@@ -48,6 +48,13 @@ app.controller('ImageController', ['$scope', '$http', '$upload', '$timeout', fun
       }
       $timeout(function(){
         $scope.images[index].depth = Number.parseInt(layer.dom.dataset.depth)
+        $http.post('/api/image/update', $scope.images[index])
+          .success(function(data, status, headers, config){
+            console.log("layer depth updated")
+          })
+          .error(function(data, status, headers, config){
+            console.log("layer depth failed to update")
+          })
         setTimeout(function(){
           bookmaker.parallax.updateLayers()
         }, 50)
