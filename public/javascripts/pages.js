@@ -11,7 +11,6 @@ app.directive('onLastRepeat', function(){
 })
 app.controller('ImageController', ['$scope', '$http', '$upload', '$timeout', function($scope, $http, $upload, $timeout){
   $scope.$on('onRepeatLast', function(scope, element, attrs){
-    console.log('update')
     if(bookmaker.parallax)
       bookmaker.parallax.updateLayers()
   });
@@ -39,26 +38,49 @@ app.controller('ImageController', ['$scope', '$http', '$upload', '$timeout', fun
   })
 
   $scope.mouseUp = function(e){
-    if(layer.dom){
-      layer.mouseUp(e)
-      var index 
-      for(var i = 0; i < $scope.images.length; i++){
-        if($scope.images[i]._id == layer.dom.id)
-          index = i
-      }
-      $timeout(function(){
-        $scope.images[index].depth = Number.parseInt(layer.dom.dataset.depth)
-        $http.post('/api/image/update', $scope.images[index])
+    if(e.target.className == "delete"){ 
+      dom = layer.getLayerFromChild(e.target)
+      if(dom){
+        var index
+        for(var i = 0; i < $scope.images.length; i++){
+          if($scope.images[i]._id == dom.id)
+            index = i
+        }
+        $http.post('/api/image/remove', $scope.images[index])
           .success(function(data, status, headers, config){
-            console.log("layer depth updated")
+            console.log("layer removed")
           })
           .error(function(data, status, headers, config){
-            console.log("layer depth failed to update")
+            console.log("layer failed to be removed")
           })
+        $scope.images.splice(index, 1)
         setTimeout(function(){
           bookmaker.parallax.updateLayers()
         }, 50)
-      }, 100)
+      }
+    } 
+    else {
+      if(layer.dom){
+        layer.mouseUp(e)
+        var index 
+        for(var i = 0; i < $scope.images.length; i++){
+          if($scope.images[i]._id == layer.dom.id)
+            index = i
+        }
+        $timeout(function(){
+          $scope.images[index].depth = Number.parseInt(layer.dom.dataset.depth)
+          $http.post('/api/image/update', $scope.images[index])
+            .success(function(data, status, headers, config){
+              console.log("layer depth updated")
+            })
+            .error(function(data, status, headers, config){
+              console.log("layer depth failed to update")
+            })
+          setTimeout(function(){
+            bookmaker.parallax.updateLayers()
+          }, 50)
+        }, 100)
+      }
     }
   }
 
@@ -243,10 +265,7 @@ var layer = {
     e.stopPropagation()
     e.preventDefault()
     element = e.toElement
-    if(element.className == 'delete'){
-      console.log('delete this div')
-    }
-    else{
+    if(element.className != "delete"){
       dom = layer.getLayerFromChild(element)
       if(dom){
         layer.isMouseDown = true
@@ -282,13 +301,6 @@ var layer = {
       //set the yPos to an integer percent, add the transition state, 
       //then apply the yPos to the dom
       roundedPos = layer.closestFreeSpace(layer.yPos)
-      /*
-      roundedPos = Math.round(layer.yPos / layer.spacingInterval) * layer.spacingInterval
-      if(!layer.freeSpaceForLayerAtPosition(roundedPos)){
-        console.log("collision found")
-        console.log("closest free space: " + layer.closestFreeSpace(layer.yPos))
-      }
-     */
       layer.yPos = roundedPos
       layer.dom.style.transition = "top 0.1s ease-in-out, z-index 0.1s ease-in-out"
       setTimeout(function(){
@@ -304,22 +316,6 @@ var layer = {
       }, 50)
       layer.dom.dataset.depth = layer.yPos
     }
-  },
-
-  drop: function(e){
-    /*
-    e.stopPropagation()
-    e.preventDefault()
-    if(e.type == "drop"){
-      console.log(e)
-      http.post('/page', {title: "test post"}, {headers: {'Content-Type': 'application/json', enctype:'multipart/form-data'}}).success(function(data, status, headers, config){
-        console.log('post success')
-      }).
-      error(function(data, status, headers, config){
-        console.log('post error')
-      })
-    }
-   */
   },
 
   getPxFromPercent: function(p){

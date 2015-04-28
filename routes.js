@@ -9,6 +9,7 @@ multipartyMiddleware = multiparty()
 
 router.post('/api/image/create', multipartyMiddleware, images.create)
 router.post('/api/image/update', images.update)
+router.post('/api/image/remove', images.remove)
 router.get('/api/image/:id', images.getImage)
 router.get('/api/image/:book/:page', images.getImages)
 router.get('/api/book/:id', books.getBook)

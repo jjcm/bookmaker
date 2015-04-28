@@ -52,10 +52,18 @@ var Images = {
     })
   },
   update: function(req, res, next){
-    console.log(req.body)
-    var img = Image.findOne({_id: req.body._id})
-    console.log("DATABSE")
-    console.log(img)
+    if(req.body._id)
+      Image.findOneAndUpdate({_id: req.body._id}, {depth: req.body.depth}, function(err, image){
+        if(err) { return next(err)}
+        console.log("Image " + image._id + " (" + image.book + " page " + image.page + ") has been updated with depth " + image.depth)
+      })
+  },
+  remove: function(req, res, next){
+    if(req.body._id)
+      Image.findOneAndRemove({_id: req.body._id}, function(err, image){
+        if(err) { return next(err)}
+        console.log("Image " + req.body._id + " (" + req.body.book + " page " + req.body.page + ") has been deleted")
+      })
   },
 }
 
