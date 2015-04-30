@@ -26,6 +26,15 @@ var Pages = {
         })
       }
     })
+  },
+  updateParallax: function(req, res, next){
+    console.log(req.body)
+    if(req.body._id)
+      Page.findOneAndUpdate({_id: req.body._id}, {xScale: req.body.xScale, yScale: req.body.yScale}, function(err, page){
+        if(err) { return next(err)}
+        console.log(page.book + " page " + page.number + " has been updated with xScale " + page.xScale + " and yScale " + page.yScale)
+        res.json(page)
+      })
   }
 }
 

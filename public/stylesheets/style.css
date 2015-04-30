@@ -155,7 +155,7 @@ a {
 #right-panel #weight-adjustment #x-weight .bar .inner-bar,
 #right-panel #weight-adjustment #y-weight .bar .inner-bar {
   background-color: #f44255;
-  width: 90px;
+  width: 6px;
   height: 6px;
   border-radius: 3px;
 }

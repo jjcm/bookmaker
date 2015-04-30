@@ -17,7 +17,11 @@ app.controller('ImageController', ['$scope', '$http', '$upload', '$timeout', fun
 
   $http.get('/api/book/' + book)
     .success(function(book){
+      $scope.book = book
+      $scope.currentPage = book.pages[page - 1]
       bookmaker.book = book
+      weight.x = $scope.currentPage.xScale
+      weight.y = $scope.currentPage.yScale
     })
     .error(function(err){
       console.log('book not found')
@@ -38,6 +42,7 @@ app.controller('ImageController', ['$scope', '$http', '$upload', '$timeout', fun
   })
 
   $scope.mouseUp = function(e){
+    if(weight.isMouseDown){ weight.mouseUp($http, $scope) }
     if(e.target.className == "delete"){ 
       dom = layer.getLayerFromChild(e.target)
       if(dom){
@@ -143,7 +148,6 @@ var bookmaker = {
   mouseUp: function(e){
     document.body.classList.remove('dragging')
     if(layer.isMouseDown) layer.mouseUp(e)
-    if(weight.isMouseDown) weight.mouseUp(e)
     if(pageSelect.isMouseDown) pageSelect.mouseUp(e)
   }
 }
@@ -207,29 +211,45 @@ var weight = {
   },
 
   active: null,
-  x: 50,
-  y: 50,
+  x: null,
+  y: null,
   dom: null,
   innerBar: null,
   isMouseDown: false,
 
   mouseDown: function(e){
+    e.stopPropagation()
+    e.preventDefault()
     weight.dom = weight.getDomFromChild(e.toElement)
     if(weight.dom){
       weight.isMouseDown = true
       document.body.classList.add('dragging')
       weight.innerBar = weight.dom.getElementsByClassName('inner-bar')[0]
       weight.active = weight.dom.id.charAt(0)
-      weight.innerBar.style.width = weight.getWidthFromPosition(e.layerX) + "%"
+      width = weight.getWidthFromPosition(e.layerX)
+      weight[weight.active] = width 
+      weight.innerBar.style.width = width + "%"
     }
   },
 
   mouseMove: function(e){
-    weight.innerBar.style.width = weight.getWidthFromPosition(e.layerX) + "%"
+    width = weight.getWidthFromPosition(e.layerX)
+    weight.innerBar.style.width = width + "%"
+    weight[weight.active] = width 
   },
 
-  mouseUp: function(e){
+  mouseUp: function($http, $scope){
+    $scope.currentPage.xScale = weight.x
+    $scope.currentPage.yScale = weight.y
+    $http.post('/api/page/updateparallax', $scope.currentPage)
+      .success(function(data, status, headers, config){
+        console.log("parallax updated")
+      })
+      .error(function(data, status, headers, config){
+        console.log("parallax failed to update")
+      })
     weight.isMouseDown = false
+    weight.dom = null
   },
 
   getWidthFromPosition: function(p){
