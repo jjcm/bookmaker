@@ -25,7 +25,7 @@ block content
         li#add-page-container
           #add-page
 
-    ul#images(ng-file-drop, ng-over-class='dragover', ng-multiple='true', ng-model='files')
+    ul#images(ng-file-drop, ng-over-class='dragover', ng-multiple='true', ng-model='files', data-scalar-x='{{currentPage.xScale / 5}}', data-scalar-y='{{currentPage.yScale / 5}}')
       li.layer(ng-repeat='image in images | orderBy: "depth" : reverse', data-depth="{{image.depth / 100}}")
         img(src='{{image.path}}', style='left: {{image.offsetX}}; top: {{image.offsetY}};')
     

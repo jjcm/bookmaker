@@ -241,6 +241,8 @@ var weight = {
   mouseUp: function($http, $scope){
     $scope.currentPage.xScale = weight.x
     $scope.currentPage.yScale = weight.y
+    bookmaker.parallax.scalarX = weight.x / 5
+    bookmaker.parallax.scalarY = weight.y / 5
     $http.post('/api/page/updateparallax', $scope.currentPage)
       .success(function(data, status, headers, config){
         console.log("parallax updated")
