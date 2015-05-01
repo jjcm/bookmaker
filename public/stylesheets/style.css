@@ -8,9 +8,13 @@ body {
   color: #ddd;
   margin: 0;
   overflow: hidden;
+  height: 100%;
 }
 a {
   color: #99b7ff;
+}
+#container {
+  height: 100%;
 }
 #header {
   background-color: #252629;
@@ -106,6 +110,69 @@ a {
 #header #add-page-container #add-page:hover {
   background-color: #fa3045;
 }
+#header #weight-adjustment {
+  height: 96px;
+}
+#header #weight-adjustment #x-weight,
+#header #weight-adjustment #y-weight {
+  margin-top: 30px;
+  margin-left: 40px;
+  width: 196px;
+  float: left;
+}
+#header #weight-adjustment #x-weight .label,
+#header #weight-adjustment #y-weight .label {
+  margin-left: 8px;
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 700;
+  color: #b9b9b9;
+}
+#header #weight-adjustment #x-weight .bar-container,
+#header #weight-adjustment #y-weight .bar-container {
+  padding: 8px;
+  cursor: pointer;
+}
+#header #weight-adjustment #x-weight .bar,
+#header #weight-adjustment #y-weight .bar {
+  background-color: #fff;
+  height: 6px;
+  border-radius: 3px;
+  width: 180px;
+}
+#header #weight-adjustment #x-weight .bar .inner-bar,
+#header #weight-adjustment #y-weight .bar .inner-bar {
+  background-color: #f44255;
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+}
+#left-panel {
+  margin-right: 504px;
+  position: relative;
+  height: 100%;
+}
+#left-panel .vertical-center {
+  position: relative;
+  top: 41%;
+  transform: translateY(-50%);
+}
+#left-panel #scale,
+#left-panel #frame {
+  background-color: #000;
+  width: 1000px;
+  height: 400px;
+  overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
+}
+#left-panel #images {
+  left: -400px;
+  top: -115px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 #right-panel {
   position: absolute;
   background-color: #191919;
@@ -113,51 +180,10 @@ a {
   top: 0px;
   width: 504px;
   box-sizing: border-box;
-  padding-top: 96px;
+  margin-top: 96px;
   padding-bottom: 120px;
   height: 100%;
   overflow: hidden;
-}
-#right-panel #weight-adjustment {
-  background-color: #2e2f32;
-  position: absolute;
-  height: 96px;
-  width: 504px;
-  top: 0px;
-}
-#right-panel #weight-adjustment #x-weight,
-#right-panel #weight-adjustment #y-weight {
-  margin-top: 30px;
-  margin-left: 40px;
-  width: 196px;
-  float: left;
-}
-#right-panel #weight-adjustment #x-weight .label,
-#right-panel #weight-adjustment #y-weight .label {
-  margin-left: 8px;
-  text-transform: uppercase;
-  font-size: 18px;
-  font-weight: 700;
-  color: #b9b9b9;
-}
-#right-panel #weight-adjustment #x-weight .bar-container,
-#right-panel #weight-adjustment #y-weight .bar-container {
-  padding: 8px;
-  cursor: pointer;
-}
-#right-panel #weight-adjustment #x-weight .bar,
-#right-panel #weight-adjustment #y-weight .bar {
-  background-color: #fff;
-  height: 6px;
-  border-radius: 3px;
-  width: 180px;
-}
-#right-panel #weight-adjustment #x-weight .bar .inner-bar,
-#right-panel #weight-adjustment #y-weight .bar .inner-bar {
-  background-color: #f44255;
-  width: 6px;
-  height: 6px;
-  border-radius: 3px;
 }
 #layers {
   position: relative;
@@ -182,6 +208,11 @@ a {
   background-image: url("/images/transparentPattern.png");
   width: 126px;
   height: 80px;
+}
+#layers .layer .image-container .image {
+  height: 80px;
+  width: 126px;
+  background-size: cover;
 }
 #layers .layer .content {
   position: absolute;
@@ -226,7 +257,4 @@ a {
 }
 .dragging ::selection {
   background: none;
-}
-#images {
-  list-style: none;
 }

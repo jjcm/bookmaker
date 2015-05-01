@@ -128,6 +128,8 @@ var bookmaker = {
     //this is bad code, should be a directive
     setTimeout(function(){
       bookmaker.parallax = new Parallax($('images'))
+      bookmaker.parallax.clipRelativeInput = true
+      bookmaker.parallax.relativeInput = true
     }, 200)
   },
 
@@ -269,6 +271,17 @@ var weight = {
     return null
   }
 }
+
+var image = {
+  maxWidth: 0,
+  maxHeight: 0,
+  checkMaxes: function(){
+  },
+  updateCenters: function(){
+  },
+  updateOffset: function(){
+  }
+},
 
 var layer = {
   init: function(){

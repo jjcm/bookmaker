@@ -24,25 +24,29 @@ block content
 
         li#add-page-container
           #add-page
+        #weight-adjustment
+          #x-weight
+            .label
+              | x-weight
+            #x-weight-control.bar-container
+              .bar
+                .inner-bar(style='width: {{currentPage.xScale}}%')
+          #y-weight
+            .label
+              | y-weight
+            #y-weight-control.bar-container
+              .bar
+                .inner-bar(style='width: {{currentPage.yScale}}%')
 
-    ul#images(ng-file-drop, ng-over-class='dragover', ng-multiple='true', ng-model='files', data-scalar-x='{{currentPage.xScale / 5}}', data-scalar-y='{{currentPage.yScale / 5}}')
-      li.layer(ng-repeat='image in images | orderBy: "depth" : reverse', data-depth="{{image.depth / 100}}")
-        img(src='{{image.path}}', style='left: {{image.offsetX}}; top: {{image.offsetY}};')
+    #left-panel
+      .vertical-center
+        #scale
+          #frame
+            ul#images(ng-file-drop, ng-over-class='dragover', ng-multiple='true', ng-model='files', data-scalar-x='{{currentPage.xScale / 5}}', data-scalar-y='{{currentPage.yScale / 5}}')
+              li.layer(ng-repeat='image in images | orderBy : "depth" : true', data-depth="{{1 - (image.depth / 100)}}")
+                img(src='{{image.path}}', style='left: {{image.offsetX}}; top: {{image.offsetY}};', class="parallax-image")
     
     #right-panel
-      #weight-adjustment
-        #x-weight
-          .label
-            | x-weight
-          #x-weight-control.bar-container
-            .bar
-              .inner-bar(style='width: {{currentPage.xScale}}%')
-        #y-weight
-          .label
-            | y-weight
-          #y-weight-control.bar-container
-            .bar
-              .inner-bar(style='width: {{currentPage.yScale}}%')
 
       #layers(ng-file-drop, ng-over-class='dragover', ng-multiple='true', ng-model='files')
         
