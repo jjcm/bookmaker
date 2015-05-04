@@ -118,12 +118,13 @@ var bookmaker = {
 
     bookmaker.page = page
 
-    //document.addEventListener('drop', layer.drop)
-    //document.addEventListener('dragover', layer.drop)
-    //document.addEventListener('dragleave', layer.drop)
     document.addEventListener('mousedown', bookmaker.mouseDown)
     document.addEventListener('mousemove', bookmaker.mouseMove)
     document.addEventListener('mouseup', bookmaker.mouseUp)
+
+    var frame = document.getElementById('frame')
+    bookmaker.viewport.x = frame.offsetWidth
+    bookmaker.viewport.y = frame.offsetHeight
 
     //this is bad code, should be a directive
     setTimeout(function(){
@@ -137,6 +138,10 @@ var bookmaker = {
   page: null,
   images: null,
   parallax: null,
+  viewport: {
+    x: 0,
+    y: 0
+  },
 
   mouseDown: function(e){
     if(pageSelect.dropdownOpen && !e.toElement.descendantOf($('page-container'))) pageSelect.hideDropdown()
@@ -276,12 +281,17 @@ var image = {
   maxWidth: 0,
   maxHeight: 0,
   checkMaxes: function(){
+    var layers = document.getElementsByClassName("parallax-image")
+    for(var i = 0; i < layers.length; i++){
+      image.maxWidth = Math.max(layers[i].width, image.maxWidth)
+      image.maxHeight = Math.max(layers[i].height, image.maxHeight)
+    }
   },
   updateCenters: function(){
   },
   updateOffset: function(){
   }
-},
+}
 
 var layer = {
   init: function(){
