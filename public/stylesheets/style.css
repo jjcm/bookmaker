@@ -167,11 +167,12 @@ a {
   margin-right: auto;
 }
 #left-panel #images {
-  left: -400px;
-  top: -115px;
   list-style: none;
   padding: 0;
   margin: 0;
+}
+#left-panel #images img {
+  position: relative;
 }
 #right-panel {
   position: absolute;

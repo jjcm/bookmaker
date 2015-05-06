@@ -12,7 +12,7 @@ app.directive('onLastRepeat', function(){
 app.controller('ImageController', ['$scope', '$http', '$upload', '$timeout', function($scope, $http, $upload, $timeout){
   $scope.$on('onRepeatLast', function(scope, element, attrs){
     if(bookmaker.parallax)
-      bookmaker.parallax.updateLayers()
+      bookmaker.update()
   });
 
   $http.get('/api/book/' + book)
@@ -60,7 +60,7 @@ app.controller('ImageController', ['$scope', '$http', '$upload', '$timeout', fun
           })
         $scope.images.splice(index, 1)
         setTimeout(function(){
-          bookmaker.parallax.updateLayers()
+          bookmaker.update()
         }, 50)
       }
     } 
@@ -82,7 +82,7 @@ app.controller('ImageController', ['$scope', '$http', '$upload', '$timeout', fun
               console.log("layer depth failed to update")
             })
           setTimeout(function(){
-            bookmaker.parallax.updateLayers()
+            bookmaker.update()
           }, 50)
         }, 100)
       }
@@ -128,10 +128,16 @@ var bookmaker = {
 
     //this is bad code, should be a directive
     setTimeout(function(){
+      image.init()
       bookmaker.parallax = new Parallax($('images'))
       bookmaker.parallax.clipRelativeInput = true
       bookmaker.parallax.relativeInput = true
-    }, 200)
+    }, 500)
+  },
+  update: function(){
+    bookmaker.parallax.updateLayers()
+    image.updateOffset()
+    image.updateCenters()
   },
 
   book: null,
@@ -278,18 +284,39 @@ var weight = {
 }
 
 var image = {
+  init: function(){
+    image.dom = $('images')
+    image.updateOffset()
+    image.updateCenters()
+  },
   maxWidth: 0,
   maxHeight: 0,
+  dom: null,
   checkMaxes: function(){
     var layers = document.getElementsByClassName("parallax-image")
     for(var i = 0; i < layers.length; i++){
+      //if we encounter an image that hasn't been loaded yet, set a listener on it and fire again once it's loaded
+      if(layers[i].width == 0 && layers[i].height == 0) layers[i].addEventListener('load', function(){
+        image.updateOffset() 
+        image.updateCenters()
+      })
       image.maxWidth = Math.max(layers[i].width, image.maxWidth)
       image.maxHeight = Math.max(layers[i].height, image.maxHeight)
     }
+    console.log(image.maxWidth)
+    console.log(image.maxHeight)
   },
   updateCenters: function(){
+    var layers = document.getElementsByClassName("parallax-image")
+    for(var i = 0; i < layers.length; i++){
+      layers[i].style.left = ((image.maxWidth - layers[i].width) / 2) + "px"
+      layers[i].style.top = ((image.maxHeight - layers[i].height) / 2) + "px"
+    }
   },
   updateOffset: function(){
+    image.checkMaxes()
+    image.dom.style.left = ((bookmaker.viewport.x - image.maxWidth) / 2) + "px"
+    image.dom.style.top = ((bookmaker.viewport.y - image.maxHeight) / 2) + "px"
   }
 }
 
