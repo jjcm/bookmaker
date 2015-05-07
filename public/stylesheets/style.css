@@ -157,14 +157,22 @@ a {
   top: 41%;
   transform: translateY(-50%);
 }
-#left-panel #scale,
-#left-panel #frame {
-  background-color: #000;
+#left-panel #resize-panel {
+  border: 4px solid #fff;
+  cursor: pointer;
+  background-color: #ccc;
   width: 1000px;
   height: 400px;
   overflow: hidden;
   margin-left: auto;
   margin-right: auto;
+}
+#left-panel #scale {
+  cursor: normal;
+  opacity: 1;
+}
+#left-panel #frame {
+  background-color: #000;
 }
 #left-panel #images {
   list-style: none;
