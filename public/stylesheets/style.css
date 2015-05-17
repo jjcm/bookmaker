@@ -168,7 +168,7 @@ a {
   margin-right: auto;
 }
 #left-panel #scale {
-  cursor: normal;
+  cursor: default;
   opacity: 1;
 }
 #left-panel #frame {
