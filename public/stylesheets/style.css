@@ -114,14 +114,16 @@ a {
   height: 96px;
 }
 #header #weight-adjustment #x-weight,
-#header #weight-adjustment #y-weight {
+#header #weight-adjustment #y-weight,
+#header #weight-adjustment #zoom {
   margin-top: 30px;
   margin-left: 40px;
   width: 196px;
   float: left;
 }
 #header #weight-adjustment #x-weight .label,
-#header #weight-adjustment #y-weight .label {
+#header #weight-adjustment #y-weight .label,
+#header #weight-adjustment #zoom .label {
   margin-left: 8px;
   text-transform: uppercase;
   font-size: 18px;
@@ -129,19 +131,22 @@ a {
   color: #b9b9b9;
 }
 #header #weight-adjustment #x-weight .bar-container,
-#header #weight-adjustment #y-weight .bar-container {
+#header #weight-adjustment #y-weight .bar-container,
+#header #weight-adjustment #zoom .bar-container {
   padding: 8px;
   cursor: pointer;
 }
 #header #weight-adjustment #x-weight .bar,
-#header #weight-adjustment #y-weight .bar {
+#header #weight-adjustment #y-weight .bar,
+#header #weight-adjustment #zoom .bar {
   background-color: #fff;
   height: 6px;
   border-radius: 3px;
   width: 180px;
 }
 #header #weight-adjustment #x-weight .bar .inner-bar,
-#header #weight-adjustment #y-weight .bar .inner-bar {
+#header #weight-adjustment #y-weight .bar .inner-bar,
+#header #weight-adjustment #zoom .bar .inner-bar {
   background-color: #f44255;
   width: 6px;
   height: 6px;
@@ -151,6 +156,7 @@ a {
   margin-right: 504px;
   position: relative;
   height: 100%;
+  overflow: hidden;
 }
 #left-panel .vertical-center {
   position: relative;
@@ -161,8 +167,8 @@ a {
   border: 4px solid #fff;
   cursor: pointer;
   background-color: #ccc;
-  width: 1000px;
-  height: 400px;
+  width: 1200px;
+  height: 600px;
   overflow: hidden;
   margin-left: auto;
   margin-right: auto;

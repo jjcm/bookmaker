@@ -316,7 +316,7 @@ var image = {
   updateOffset: function(){
     image.checkMaxes()
     image.dom.style.left = ((bookmaker.viewport.x - image.maxWidth) / 2) + "px"
-    image.dom.style.top = ((bookmaker.viewport.y - image.maxHeight) / 2) + "px"
+    //image.dom.style.top = ((bookmaker.viewport.y - image.maxHeight) / 2) + "px"
   }
 }
 
