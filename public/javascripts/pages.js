@@ -22,6 +22,7 @@ app.controller('ImageController', ['$scope', '$http', '$upload', '$timeout', fun
       bookmaker.book = book
       weight.x = $scope.currentPage.xScale
       weight.y = $scope.currentPage.yScale
+      weight.z = $scope.currentPage.z
     })
     .error(function(err){
       console.log('book not found')
@@ -221,11 +222,13 @@ var weight = {
   init: function(){
     $('x-weight-control').addEventListener('mousedown', weight.mouseDown)
     $('y-weight-control').addEventListener('mousedown', weight.mouseDown)
+    $('z-weight-control').addEventListener('mousedown', weight.mouseDown)
   },
 
   active: null,
   x: null,
   y: null,
+  z: null,
   dom: null,
   innerBar: null,
   isMouseDown: false,
@@ -254,6 +257,7 @@ var weight = {
   mouseUp: function($http, $scope){
     $scope.currentPage.xScale = weight.x
     $scope.currentPage.yScale = weight.y
+    $scope.currentPage.zScale = weight.z
     bookmaker.parallax.scalarX = weight.x / 5
     bookmaker.parallax.scalarY = weight.y / 5
     $http.post('/api/page/updateparallax', $scope.currentPage)
