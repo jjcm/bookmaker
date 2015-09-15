@@ -179,6 +179,7 @@ a {
 }
 #left-panel #frame {
   background-color: #000;
+  transition: transform 0.2s ease-in-out;
 }
 #left-panel #images {
   list-style: none;

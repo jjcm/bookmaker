@@ -46,7 +46,7 @@ block content
       .vertical-center
         #resize-panel
           #scale
-            #frame
+            #frame(style='transform: scale({{currentPage.zScale / 50}})')
               ul#images(ng-file-drop, ng-over-class='dragover', ng-multiple='true', ng-model='files', data-scalar-x='{{currentPage.xScale / 5}}', data-scalar-y='{{currentPage.yScale / 5}}')
                 li.layer(ng-repeat='image in images | orderBy : "depth" : true', data-depth="{{1 - (image.depth / 100)}}")
                   img(src='{{image.path}}', class="parallax-image")
