@@ -45,6 +45,8 @@ block content
     #left-panel
       .vertical-center
         #resize-panel
+          #resize-horizontal
+          #resize-vertical
           #scale
             #frame(style='transform: scale({{currentPage.zScale / 50}})')
               ul#images(ng-file-drop, ng-over-class='dragover', ng-multiple='true', ng-model='files', data-scalar-x='{{currentPage.xScale / 5}}', data-scalar-y='{{currentPage.yScale / 5}}')

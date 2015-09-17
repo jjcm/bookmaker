@@ -165,7 +165,7 @@ a {
 }
 #left-panel #resize-panel {
   border: 4px solid #fff;
-  cursor: pointer;
+  cursor: row-resize;
   background-color: #ccc;
   width: 1200px;
   height: 600px;
