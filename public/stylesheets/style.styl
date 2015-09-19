@@ -137,22 +137,51 @@ a
     top: 41%
     transform: translateY(-50%)
   #resize-panel
-    border: 4px solid #fff
-    cursor: row-resize
     background-color: #ccc
     width: 1200px
     height: 600px
+    position: relative
     overflow: hidden
     margin-left: auto
     margin-right: auto
+    #resize-horizontal-left, #resize-horizontal-right, #resize-vertical-top, #resize-vertical-bottom, #resize-top-left, #resize-top-right, #resize-bottom-right, #resize-bottom-left
+        position: absolute
+        background-color: #888
+        z-index: 1000
+    #resize-horizontal-left, #resize-horizontal-right
+        width: 6px
+        height: 100%
+        cursor: ew-resize
     #resize-horizontal-left
+        left: 0
     #resize-horizontal-right
+        right: 0
+    #resize-vertical-top, #resize-vertical-bottom
+        height: 6px
+        width: 100%
+        cursor: ns-resize
     #resize-vertical-top
+        top: 0
     #resize-vertical-bottom
+        bottom: 0
+    #resize-top-left, #resize-top-right, #resize-bottom-right, #resize-bottom-left
+        width: 6px
+        height: 6px
+        cursor: nesw-resize
+    #resize-top-left, #resize-bottom-right
+        cursor: nwse-resize
     #resize-top-left
+        top: 0
+        left: 0
     #resize-top-right
+        top: 0
+        right: 0
     #resize-bottom-right
+        bottom: 0
+        right: 0
     #resize-bottom-left
+        bottom: 0
+        left: 0
     cursor: default
     opacity: 1
   #frame

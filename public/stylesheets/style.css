@@ -164,18 +164,79 @@ a {
   transform: translateY(-50%);
 }
 #left-panel #resize-panel {
-  border: 4px solid #fff;
-  cursor: row-resize;
   background-color: #ccc;
   width: 1200px;
   height: 600px;
+  position: relative;
   overflow: hidden;
   margin-left: auto;
   margin-right: auto;
-}
-#left-panel #scale {
   cursor: default;
   opacity: 1;
+}
+#left-panel #resize-panel #resize-horizontal-left,
+#left-panel #resize-panel #resize-horizontal-right,
+#left-panel #resize-panel #resize-vertical-top,
+#left-panel #resize-panel #resize-vertical-bottom,
+#left-panel #resize-panel #resize-top-left,
+#left-panel #resize-panel #resize-top-right,
+#left-panel #resize-panel #resize-bottom-right,
+#left-panel #resize-panel #resize-bottom-left {
+  position: absolute;
+  background-color: #888;
+  z-index: 1000;
+}
+#left-panel #resize-panel #resize-horizontal-left,
+#left-panel #resize-panel #resize-horizontal-right {
+  width: 6px;
+  height: 100%;
+  cursor: ew-resize;
+}
+#left-panel #resize-panel #resize-horizontal-left {
+  left: 0;
+}
+#left-panel #resize-panel #resize-horizontal-right {
+  right: 0;
+}
+#left-panel #resize-panel #resize-vertical-top,
+#left-panel #resize-panel #resize-vertical-bottom {
+  height: 6px;
+  width: 100%;
+  cursor: ns-resize;
+}
+#left-panel #resize-panel #resize-vertical-top {
+  top: 0;
+}
+#left-panel #resize-panel #resize-vertical-bottom {
+  bottom: 0;
+}
+#left-panel #resize-panel #resize-top-left,
+#left-panel #resize-panel #resize-top-right,
+#left-panel #resize-panel #resize-bottom-right,
+#left-panel #resize-panel #resize-bottom-left {
+  width: 6px;
+  height: 6px;
+  cursor: nesw-resize;
+}
+#left-panel #resize-panel #resize-top-left,
+#left-panel #resize-panel #resize-bottom-right {
+  cursor: nwse-resize;
+}
+#left-panel #resize-panel #resize-top-left {
+  top: 0;
+  left: 0;
+}
+#left-panel #resize-panel #resize-top-right {
+  top: 0;
+  right: 0;
+}
+#left-panel #resize-panel #resize-bottom-right {
+  bottom: 0;
+  right: 0;
+}
+#left-panel #resize-panel #resize-bottom-left {
+  bottom: 0;
+  left: 0;
 }
 #left-panel #frame {
   background-color: #000;
