@@ -186,6 +186,16 @@ a {
   background-color: #888;
   z-index: 1000;
 }
+#left-panel #resize-panel #resize-horizontal-left:hover,
+#left-panel #resize-panel #resize-horizontal-right:hover,
+#left-panel #resize-panel #resize-vertical-top:hover,
+#left-panel #resize-panel #resize-vertical-bottom:hover,
+#left-panel #resize-panel #resize-top-left:hover,
+#left-panel #resize-panel #resize-top-right:hover,
+#left-panel #resize-panel #resize-bottom-right:hover,
+#left-panel #resize-panel #resize-bottom-left:hover {
+  background-color: #aaa;
+}
 #left-panel #resize-panel #resize-horizontal-left,
 #left-panel #resize-panel #resize-horizontal-right {
   width: 6px;
